@@ -19,7 +19,7 @@ var readFile = function(fileName, encoding) {
 
 
 // var myBuffer = new Buffer(256);
-var indexfile = "index.html";
+var indexFile = "index.html";
 
 app.get('/', function(request, response) {
     var fileContent = readFile(indexFile);
