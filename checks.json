@@ -5,10 +5,13 @@
  ".about",
  ".heading",
  ".subheading",
- "meta",
- "head",
- "style",
- "div",
- "About",
- "Body" 
+ ".pitch",
+ ".video",
+ ".thermometer",
+ ".order",
+ ".social",
+ ".section1",
+ ".section2",
+ ".faq",
+ ".footer"
 ]
