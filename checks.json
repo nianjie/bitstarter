@@ -1,2 +1,14 @@
 ["h1",
- ".navigation"]
+ ".navigation",
+ ".logo",
+ ".blank",
+ ".about",
+ ".heading",
+ ".subheading",
+ "meta",
+ "head",
+ "style",
+ "div",
+ "About",
+ "Body" 
+]
