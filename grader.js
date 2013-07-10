@@ -88,17 +88,19 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
+var checkJson;
 if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
-        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .option('-u, --url <url_address>', 'URL to being checked', clone(assertURLCorrect), URL_DEFAULT)
+        .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists))
+        .option('-u, --url <url_address>', 'URL to being checked', clone(assertURLCorrect))
         .parse(process.argv);
     if (program.file) {
-	var checkJson = checkHtmlFile(program.file, program.checks);
-    }
-    if (program.url) {
-	var checkJson = checkUrl(program.url, program.checks);
+	checkJson = checkHtmlFile(program.file, program.checks);
+	console.log("processing --file\n");
+    } else if (program.url) {
+	checkJson = checkUrl(program.url, program.checks);
+	console.log("processing --url\n");
     }
     var outJson = JSON.stringify(checkJson, null, 4);
     console.log(outJson);
