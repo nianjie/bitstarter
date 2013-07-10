@@ -51,9 +51,11 @@ var loadChecks = function(checksfile) {
     return JSON.parse(fs.readFileSync(checksfile));
 };
 
+
 var checkUrl = function(url, checksfiles) {
 //    var fn1 = buildCheckFunction(url, checksfiles);
     var out = {};
+    
     rest.get(url).on('complete', function(result, response) {
 	if (result instanceof Error) {
 	    console.error('Error: ' + util.format(response.message));
@@ -61,14 +63,17 @@ var checkUrl = function(url, checksfiles) {
 	} else {
 	    $ = cheerio.load(result);
 	    var checks = loadChecks(checksfiles).sort();
-//	    var out = {};
 	    for(var ii in checks) {
 		var present = $(checks[ii]).length > 0;
 		out[checks[ii]] = present;
+//		console.log(out[checks[ii]] + '\n');
 	    }
+	    var outJson = JSON.stringify(out, null, 4);
+	    console.log(outJson);
 	}
     });
-    return out;	    
+
+//    return out;	    
 };
 
 var checkHtmlFile = function(htmlfile, checksfile) {
@@ -88,7 +93,7 @@ var clone = function(fn) {
     return fn.bind({});
 };
 
-var checkJson;
+// var checkJson;
 if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
@@ -96,14 +101,16 @@ if(require.main == module) {
         .option('-u, --url <url_address>', 'URL to being checked', clone(assertURLCorrect))
         .parse(process.argv);
     if (program.file) {
-	checkJson = checkHtmlFile(program.file, program.checks);
-	console.log("processing --file\n");
+	var checkJson = checkHtmlFile(program.file, program.checks);
+	var outJson = JSON.stringify(checkJson, null, 4);
+	console.log(outJson);
+//	console.log("processing --file\n");
     } else if (program.url) {
 	checkJson = checkUrl(program.url, program.checks);
-	console.log("processing --url\n");
+//	console.log("processing --url\n");
     }
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
+//    var outJson = JSON.stringify(checkJson, null, 4);
+//    console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
     exports.checkUrl = checkUrl;
