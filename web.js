@@ -10,6 +10,21 @@ var cached = {};
 var enableCache = CACHE_DEFAULT;
 var indexFile = "index.html";
 
+var assertFileExists = function(infile) {
+    var instr = infile.toString();
+    if(!fs.existsSync(instr)) {
+        console.log("%s does not exist. Exiting.", instr);
+        process.exit(1); 
+    }
+    return instr;
+};
+
+var clone = function(fn) {
+    // Workaround for commander.js issue.
+    // http://stackoverflow.com/a/6772648
+    return fn.bind({});
+};
+
 if(require.main == module) {
     program
         .option('-n, --nocache', 'Disable file cache (default is enable)')
