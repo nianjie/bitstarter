@@ -1,31 +1,51 @@
+#!/usr/bin/env node
 var express = require('express');
+var program = require('commander');
+var HTMLFILE_DEFAULT = "index.html";
+var CACHE_DEFAULT = true;
 
 var app = express.createServer(express.logger());
 
 var cached = {};
+var enableCache = CACHE_DEFAULT;
+var indexFile = "index.html";
+
+if(require.main == module) {
+    program
+        .option('-n, --nocache', 'Disable file cache (default is enable)')
+        .option('-f, --file <html_file>', 'Path to html file (default is index.html)', clone(assertFileExists), HTMLFILE_DEFAULT)
+        .parse(process.argv);
+    if (program.nocache) enableCache = false;
+    if (program.file) indexFile = program.file;
+} // what should do when running as an module?
 
 // a function that reads file specified.
 var readFile = function(fileName, encoding) {
-    if (!cached[fileName]) {
-	var fs = require('fs');
-	var out = fs.readFileSync(fileName, encoding);
-	console.log("read file : " + fs.realpathSync(fileName));
-	// either a buffer or a string
-	Buffer.isBuffer(out) ? cached[fileName] = out.toString() : cached[fileName] = out;
+    var fs = require('fs');
+    var contents = null;
+    if (enableCache) { // cache file
+	if (!cached[fileName]) {
+	    console.log("read file : " + fs.realpathSync(fileName));
+	    // either a buffer or a string
+	    var out = fs.readFileSync(fileName, encoding);
+	    Buffer.isBuffer(out) ? cached[fileName] = out.toString() : cached[fileName] = out;
+	}
+	contents = cached[fileName];
+    } else { // not cache
+	contents = fs.readFileSync(fileName, encoding);
     }
-    
-    return cached[fileName];
+
+    return contents;
 };
 
 
 // var myBuffer = new Buffer(256);
-var indexFile = "index.html";
 
 app.get('/', function(request, response) {
     var fileContent = readFile(indexFile);
 
     response.send(fileContent);
-    
+
     console.log("responsed request from : " + request);
 });
 
@@ -33,3 +53,4 @@ var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
