@@ -47,7 +47,10 @@ var readFile = function(fileName, encoding) {
 	}
 	contents = cached[fileName];
     } else { // not cache
-	contents = fs.readFileSync(fileName, encoding);
+	console.log("read file : " + fs.realpathSync(fileName));
+	// either a buffer(if no encoding specified) or a string(if encoding specified)
+	var out = fs.readFileSync(fileName, encoding);
+	Buffer.isBuffer(out) ? contents = out.toString() : contents = out;
     }
 
     return contents;
