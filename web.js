@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+var fs = require('fs');
 var express = require('express');
 var program = require('commander');
 var HTMLFILE_DEFAULT = "index.html";
@@ -14,7 +15,7 @@ var assertFileExists = function(infile) {
     var instr = infile.toString();
     if(!fs.existsSync(instr)) {
         console.log("%s does not exist. Exiting.", instr);
-        process.exit(1); 
+        process.exit(1);
     }
     return instr;
 };
@@ -36,7 +37,6 @@ if(require.main == module) {
 
 // a function that reads file specified.
 var readFile = function(fileName, encoding) {
-    var fs = require('fs');
     var contents = null;
     if (enableCache) { // cache file
 	if (!cached[fileName]) {
@@ -68,4 +68,3 @@ var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
-
