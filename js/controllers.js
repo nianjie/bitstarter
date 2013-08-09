@@ -24,6 +24,10 @@ var init;
 
 self.init= function () {
 
+angular.module('TetrisWorld', []).controller('MyController', ['$scope', function($scope) {
+    
+    
+}]);
 
 };
 

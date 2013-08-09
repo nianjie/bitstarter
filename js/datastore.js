@@ -57,8 +57,25 @@ self.root= new Firebase('https://tetrisworld.firebaseio.com/');
 
 
 self.init= function () {
-
-
+    // 
+    self.data= {
+	activeGroup: null,
+	group: {},
+	lastPlayed: {
+	    array: []
+	},
+	track: {},
+	user: {},
+	username: {}
+    };
+    
+    self.data.user[authentication.userid]= {
+	following: [],
+	isOnline: true,
+	board: {},
+	playingState:tetris.PlayingState.Watching,
+	username: authentication.username
+    };
 
 };
 
