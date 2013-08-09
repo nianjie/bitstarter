@@ -61,10 +61,10 @@ self.init= function () {
     self.data= {
 	activeGroup: null,
 	group: {},
+	ranking: {},
 	lastPlayed: {
 	    array: []
 	},
-	track: {},
 	user: {},
 	username: {}
     };
