@@ -52,7 +52,7 @@ var user;
 
 
 self.eventHandlers= {};
-self.root= new Firebase('https://napsterfm.firebaseio.com/');
+self.root= new Firebase('https://tetrisworld.firebaseio.com/');
 
 
 
