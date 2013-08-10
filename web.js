@@ -64,8 +64,25 @@ app.get('/', function(request, response) {
 
     response.send(fileContent);
 
-    console.log("responsed request from : " + request);
-});
+    var props = "";
+    for (var prop in request) {
+	props += "[" + prop + "]=" + request[prop] + ";";
+    }
+    console.log('request:' + props);
+})
+/*
+.get('/js/init.js', function(request, response) {
+    var fileContent = readFile('./js/init.js');
+    
+    response.send(fileContent);
+    var props = "";
+    for (var prop in request) {
+	props += "[" + prop + "]=" + request[prop] + ";";
+    }
+    console.log('request:' + props);
+})
+*/
+;
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
