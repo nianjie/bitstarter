@@ -18,6 +18,7 @@ ga('create', 'UA-42937068-1', 'herokuapp.com');
 ga('send', 'pageview');
 
 /* init application code */
+tetris.init();
 controllers.init();
 authentication.init();
 datastore.init();
