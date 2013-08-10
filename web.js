@@ -5,7 +5,13 @@ var program = require('commander');
 var HTMLFILE_DEFAULT = "index.html";
 var CACHE_DEFAULT = true;
 
-var app = express.createServer(express.logger());
+// use express 3.x
+var app = express();
+
+// log request
+app.use(express.logger('dev'));
+
+app.use(express.static(__dirname + '/public'));
 
 var cached = {};
 var enableCache = CACHE_DEFAULT;
@@ -64,24 +70,7 @@ app.get('/', function(request, response) {
 
     response.send(fileContent);
 
-    var props = "";
-    for (var prop in request) {
-	props += "[" + prop + "]=" + request[prop] + ";";
-    }
-    console.log('request:' + props);
 })
-/*
-.get('/js/init.js', function(request, response) {
-    var fileContent = readFile('./js/init.js');
-    
-    response.send(fileContent);
-    var props = "";
-    for (var prop in request) {
-	props += "[" + prop + "]=" + request[prop] + ";";
-    }
-    console.log('request:' + props);
-})
-*/
 ;
 
 var port = process.env.PORT || 8080;
