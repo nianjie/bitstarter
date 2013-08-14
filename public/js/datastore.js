@@ -92,7 +92,7 @@ self.user = function(id) {
     
     user.isOnline = user.child('isOnline');
     user.playingState = user.child('playingState');
-
+    user.board = user.child('board');
 };
 
 
