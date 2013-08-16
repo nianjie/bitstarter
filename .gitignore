@@ -2,3 +2,4 @@
 /submission*.txt
 *~
 .env
+node_modules
