@@ -2,8 +2,9 @@
   "name": "bitstarter",
   "description": "an interesting tetris online game",
   "version": "0.0.3",
+  "main": "web.js",
   "dependencies": {
-    "express": "3.x",
+    "express": "3.3.4",
     "commander": "1.3.x",
     "sequelize": "~2.0.0-alpha2",
     "pg": "~2.3.1",
