@@ -32,7 +32,7 @@ app.post('/signup', function(request, response) {
     Users.find({where: {user_name: uname}}).success(function(users_instance) {
 	if(users_instance) {
 	    // users already exists,comparing with password.
-	    if(users.instance.password == passwd) {
+	    if(users_instance.password == passwd) {
 		console.log("password is confirmed!");
 	    }else {
 		console.log("password doesn't match!");
