@@ -16,11 +16,21 @@ app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8080);
 
 app.use(express.static(__dirname + '/public')); 
+// use middleware to parse parameters sent by user.
+app.use('/signup', express.bodyParser()); 
 
 // Render homepage (note trailing slash): example.com/
 app.get('/', function(request, response) {
   var data = fs.readFileSync('index.html').toString();
   response.send(data);
+});
+
+app.post('/signup', function(request, response) {
+    var uname = request.body.user_name;
+    var passwd = request.body.password;
+    console.log("user_name:" + uname + ", password:" + passwd);
+    var data = fs.readFileSync('ok.html').toString();
+    response.send(data);
 });
 
 // Render example.com/orders
