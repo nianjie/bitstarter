@@ -74,6 +74,12 @@ app.get('/refresh_orders', function(request, response) {
 
 });
 
+// try to find what DDL sequelize creates.
+db.sequelize.define("user", {
+    user_name: {type: db.Sequelize.STRING, unique: true, allowNull: false},
+    password: {type: db.Sequelize.STRING, allowNull: false}
+});
+
 // sync the database and start the server
 db.sequelize.sync().complete(function(err) {
   if (err) {
