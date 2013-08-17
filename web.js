@@ -29,6 +29,27 @@ app.post('/signup', function(request, response) {
     var uname = request.body.user_name;
     var passwd = request.body.password;
     console.log("user_name:" + uname + ", password:" + passwd);
+    Users.find({where: {user_name: uname}}).success(function(users_instance) {
+	if(users_instance) {
+	    // users already exists,comparing with password.
+	    if(users.instance.password == passwd) {
+		console.log("password is confirmed!");
+	    }else {
+		console.log("password doesn't match!");
+	    }
+	}else {
+	    // build instance and save
+	    var new_user_instance = Users.build({
+		user_name: uname,
+		password: passwd
+	    });
+	    new_user_instance.save().success(function() {
+		console.log("a new user has successfully signed up.");
+	    }).error(function(err) {
+		console.log("error when going to save:" + err);
+	    });
+	}
+    });
     var data = fs.readFileSync('ok.html').toString();
     response.send(data);
 });
@@ -85,7 +106,7 @@ app.get('/refresh_orders', function(request, response) {
 });
 
 // try to find what DDL sequelize creates.
-db.sequelize.define("user", {
+var Users = db.sequelize.define("user", {
     user_name: {type: db.Sequelize.STRING, unique: true, allowNull: false},
     password: {type: db.Sequelize.STRING, allowNull: false}
 });
