@@ -8,9 +8,14 @@ var async   = require('async')
   , db      = require('./models');
 
 var app = express();
+
+app.use(express.logger());
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.set('port', process.env.PORT || 8080);
+
+app.use(express.static(__dirname + '/public')); 
 
 // Render homepage (note trailing slash): example.com/
 app.get('/', function(request, response) {
