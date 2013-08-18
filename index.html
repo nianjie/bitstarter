@@ -143,16 +143,10 @@
 	      <li class="pull-right"><a href="#signup">sign up/login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-	  <div class="signup">
-	    <form method="post" action="/signup">
-	      User Name:<input type="text" name="user_name">
-	      Password: <input type="password" name="password">
-	      <input type="submit" value="OK">
-	    </form>
-	  </div>
         </div>
       </div>
     </div>
+    
 
     <!-- We use row-fluid inside containers to achieve a resizable layout. -->
     <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/ -->
@@ -327,7 +321,16 @@
         </div>
       </div>
     </div>
-    
+
+    <div class="container" id="signup" >
+      	  <div class="signup">
+	    <form method="post" action="/signup">
+	      User Name:<input type="text" name="user_name">
+	      Password: <input type="password" name="password">
+	      <input type="submit" value="OK">
+	    </form>
+	  </div>
+    </div>    
     <!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
     <script src="https://cdn.firebase.com/v0/firebase.js"></script>
     <!-- AngularJS: Declarative MVC framework; http://angularjs.org/ -->
