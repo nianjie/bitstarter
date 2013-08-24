@@ -323,11 +323,12 @@
       
       <!-- singup/signin form comes here -->
       <div class="row-fluid singup" id="signup" >
-      	<div class="signup">
-	  <form method="post" action="/signup">
-	    User Name:<input type="text" name="user_name">
-	    Password: <input type="password" name="password">
-	    <input type="submit" value="OK">
+      	<div class="offset1">
+	  <form class="form-inline" method="post" action="/signup">
+	    User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
+	    Password: <input type="password" class="input-small" name="password" placeholder="Password">
+	    <label class="checkbox"><input type="checkbox"> Remember me </label>
+	    <button type="submit" class="btn">Sign up</button> -- OR -- <button type="submit" class="btn">Sign in</button>
 	  </form>
 	</div>
       </div>    
