@@ -41,6 +41,9 @@
       }
 
       /* All form factors */
+      .signup {
+        padding: 0% 0%;
+      }
 
       /* Main body and headings */
       body{
@@ -146,6 +149,30 @@
         </div>
       </div>
     </div>
+
+      <!-- singup/signin form comes here -->
+      <div class="row-fluid singup" id="signup" >
+      	<div class="span12">
+	  <form class="form-inline" method="post" action="/signup">
+	    <div class="span6 offset1">
+	      User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
+	      Password: <input type="password" class="input-small" name="password" placeholder="Password">
+	    </div>
+	    <div class="span5">
+	      <label class="checkbox">
+		<input type="checkbox"> Remember me 
+	      </label>
+	      <button type="submit" class="btn">
+		Sign up
+	      </button>
+	      -- OR -- 
+	      <button type="submit" class="btn">
+		Sign in
+	      </button>
+	    </div>
+	  </form>
+	</div>
+      </div>    
     
 
     <!-- We use row-fluid inside containers to achieve a resizable layout. -->
