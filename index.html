@@ -157,33 +157,32 @@
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-	  <a class="pull-right" data-toggle="collapse" data-target="#signup" href="#signup">sign up | sign in</a>
+	  <button type="button" class="pull-right" data-toggle="collapse" data-target="#signup" href="#signup">sign up | sign in</button>
         </div>
       </div>
     </div>
 
       <!-- singup/signin form comes here -->
       <div class="collapse container signup" id="signup" >
-
 	  <form class="form-inline" method="post" action="/signup">
-      	<div class="row-fluid">
-	    <div class="span6 offset1 sec1">
-	      User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
-	      Password: <input type="password" class="input-small" name="password" placeholder="Password">
+      	    <div class="row-fluid">
+	      <div class="span6 offset1 sec1">
+		User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
+		Password: <input type="password" class="input-small" name="password" placeholder="Password">
+	      </div>
+	      <div class="span5 sec2">
+		<label class="checkbox">
+		  <input type="checkbox"> Remember me 
+		</label>
+		<button type="submit" class="btn btn-warning btn-mini">
+		  Sign up
+		</button>
+		-- OR -- 
+		<button type="submit" class="btn btn-primary btn-mini">
+		  Sign in
+		</button>
+	      </div>
 	    </div>
-	    <div class="span5 sec2">
-	      <label class="checkbox">
-		<input type="checkbox"> Remember me 
-	      </label>
-	      <button type="submit" class="btn btn-warning btn-mini">
-		Sign up
-	      </button>
-	      -- OR -- 
-	      <button type="submit" class="btn btn-primary btn-mini">
-		Sign in
-	      </button>
-	    </div>
-	</div>
 	  </form>
 
       </div>    
@@ -361,20 +360,6 @@
             put at the bottom of the page.</p>
         </div>
       </div>
-      
-      <!-- singup/signin form comes here -->
-      <div class="row-fluid singup" id="signup" >
-      	<div class="offset1">
-	  <form class="form-inline" method="post" action="/signup">
-	    User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
-	    Password: <input type="password" class="input-small" name="password" placeholder="Password">
-	    <label class="checkbox"><input type="checkbox"> Remember me </label>
-	    <button type="submit" class="btn">Sign up</button> -- OR -- <button type="submit" class="btn">Sign in</button>
-	  </form>
-	</div>
-      </div>    
-
-
 
     </div>
 
