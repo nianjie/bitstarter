@@ -44,11 +44,18 @@
       .signup {
         padding: 0% 0%;
       }
+      .signup form {
+        margin: 0 auto;
+      }
+      .signup div.sec1{
+        padding: 2% 0%;
+      }
       /* relationship selectors */
       /* https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors */
-      .signup div.sect2 {  /* were if the selector called as `.signup .sect2', it would not work. */
+      .signup div.sec2 {  /* were if the selector called as `.signup .sect2', it would not work. */
         margin: 0 auto;
         width:  400px;
+        padding:2% 0;
       }
       /* Main body and headings */
       body{
@@ -156,14 +163,15 @@
     </div>
 
       <!-- singup/signin form comes here -->
-      <div class="row-fluid signup" id="signup" >
-      	<div class="span12">
+      <div class="container signup" id="signup" >
+
 	  <form class="form-inline" method="post" action="/signup">
-	    <div class="span6 offset1">
+      	<div class="row-fluid">
+	    <div class="span6 offset1 sec1">
 	      User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
 	      Password: <input type="password" class="input-small" name="password" placeholder="Password">
 	    </div>
-	    <div class="span5 sect2">
+	    <div class="span5 sec2">
 	      <label class="checkbox">
 		<input type="checkbox"> Remember me 
 	      </label>
@@ -175,8 +183,9 @@
 		Sign in
 	      </button>
 	    </div>
-	  </form>
 	</div>
+	  </form>
+
       </div>    
     
 
