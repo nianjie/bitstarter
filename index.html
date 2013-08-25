@@ -183,11 +183,11 @@
 		<label class="checkbox">
 		  <input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
 		</label>
-		<button type="button" class="btn btn-warning btn-mini" ng-click="createUser()">
+		<button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
 		  Sign up
 		</button>
 		-- OR -- 
-		<button type="button" class="btn btn-primary btn-mini" ng-click="login()">
+		<button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
 		  Sign in
 		</button>
 	      </div>

@@ -44,16 +44,16 @@ self.init= function () {
             }
         });
         
-        $scope.createUser = function() {
-            auth.createUser($scope.loginForm.userName, $scope.loginForm.password);
+        $scope.createUser = function(uname, upwd) {
+            auth.createUser(uname, upwd);
         };
 
         $scope.logout = function () {
             auth.logout();
         };
 
-        $scope.login = function () {
-            auth.login($scope.loginForm.userName, $scope.loginForm.password);
+        $scope.login = function (uname, upwd) {
+            auth.login(uname, upwd);
         };
     });
 
