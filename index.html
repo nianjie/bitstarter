@@ -178,26 +178,20 @@
 	</div>
 
 	<div class="row-fluid collapse" id="signup" ng-hide="user">
-	  <div class="span10">
+	  <div class="span10 offset1">
 	    <form class="form-inline" name="signup">
-      	      <div class="row-fluid">
-		<div class="span7 ">
-		  User Name:<input type="text" class="input-medium" name="user_name" ng-model="login.userName" placeholder="User Name/Email Address">
-		  Password: <input type="password" class="input-small" name="user_password" ng-model="login.password" placeholder="Password">
-		</div>
-		<div class="span5">
-		  <label class="checkbox">
-		    <input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
-		  </label>
-		  <button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
-		    Sign up
-		  </button>
-		  or
-		  <button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
-		    Sign in
-		  </button>
-		</div>
-	      </div>
+	      User Name:<input type="text" class="input-medium" name="user_name" ng-model="login.userName" placeholder="User Name/Email Address">
+	      Password: <input type="password" class="input-small" name="user_password" ng-model="login.password" placeholder="Password">
+	      <label class="checkbox">
+		<input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
+	      </label>
+	      <button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
+		Sign up
+	      </button>
+	      or
+	      <button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
+		Sign in
+	      </button>
 	    </form>
 	  </div>
 	</div>
