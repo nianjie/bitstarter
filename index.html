@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myapp">
   <head>
     <meta charset="utf-8">
     <title>Tetris World</title>
@@ -135,7 +135,7 @@
       }
     </style>
   </head>
-  <body>
+  <body >
 
     <!-- Mobile-friendly navbar adapted from example. -->
     <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
@@ -157,8 +157,15 @@
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-	  <div>
-	    <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#signup">sign up | sign in</button>
+	  <div class="pull-right">
+	    <span ng-hide="user">
+	      <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#signup">
+		Sign up | Sign in
+	      </button>
+	    </span>
+	    <span ng-show="user">
+	      Hi {{user.name}}. | <button class="btn btn-link" ng-click="logout()">Logout</button>
+	    </span> 
 	  </div>
         </div>
       </div>
@@ -166,21 +173,21 @@
 
       <!-- singup/signin form comes here -->
       <div class="collapse container signup" id="signup" >
-	  <form class="form-inline" method="post" action="/signup">
+	  <form class="form-inline" name="signup">
       	    <div class="row-fluid">
 	      <div class="span6 offset1 sec1">
-		User Name:<input type="text" class="input-medium" name="user_name" placeholder="User Name/Email Address">
-		Password: <input type="password" class="input-small" name="password" placeholder="Password">
+		User Name:<input type="text" class="input-medium" name="user_name" ng-model="signup.userName" placeholder="User Name/Email Address">
+		Password: <input type="password" class="input-small" name="password" ng-model="signup.password" placeholder="Password">
 	      </div>
 	      <div class="span5 sec2">
 		<label class="checkbox">
-		  <input type="checkbox"> Remember me 
+		  <input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
 		</label>
-		<button type="submit" class="btn btn-warning btn-mini">
+		<button type="button" class="btn btn-warning btn-mini" ng-click="createUser()">
 		  Sign up
 		</button>
 		-- OR -- 
-		<button type="submit" class="btn btn-primary btn-mini">
+		<button type="button" class="btn btn-primary btn-mini" ng-click="login()">
 		  Sign in
 		</button>
 	      </div>
@@ -365,10 +372,11 @@
 
     </div>
 
-    <!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
-    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
     <!-- AngularJS: Declarative MVC framework; http://angularjs.org/ -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+    <script type="text/javascript" src="js/angularFire.js"></script>
     <!-- coinbase: bitcoin payment -->
     <script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
     
