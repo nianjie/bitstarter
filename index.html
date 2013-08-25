@@ -157,22 +157,24 @@
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
-	  <div class="pull-right">
-	    <span ng-hide="user">
-	      <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#signup">
-		Sign up | Sign in
-	      </button>
-	    </span>
-	    <span ng-show="user">
-	      Hi {{user.name}}. | <button class="btn btn-link" ng-click="logout()">Logout</button>
-	    </span> 
-	  </div>
         </div>
       </div>
     </div>
 
       <!-- singup/signin form comes here -->
-      <div class="collapse container signup" id="signup" ng-controller="LoginController">
+      <div class="container" ng-controller="LoginController">
+	<div class="row-fluid">
+	  <div class="pull-right">
+	    <span ng-hide="user">
+	      <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#signup">
+		Sign up | Sign in
+	      </button>
+	    </span>
+	    <span ng-show="user">
+	      Hi {{user.name}}, welcome to this site.  |<button class="btn btn-link" ng-click="logout()">Logout</button>
+	    </span>
+	  </div>
+	  <div class="collapse container signup" id="signup" ng-hide="user">
 	  <form class="form-inline" name="signup">
       	    <div class="row-fluid">
 	      <div class="span6 offset1 sec1">
@@ -186,16 +188,16 @@
 		<button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
 		  Sign up
 		</button>
-		-- OR -- 
+		or
 		<button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
 		  Sign in
 		</button>
 	      </div>
 	    </div>
 	  </form>
-
-      </div>    
-    
+	  </div>
+	</div>
+      </div>
 
     <!-- We use row-fluid inside containers to achieve a resizable layout. -->
     <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/ -->
