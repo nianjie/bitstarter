@@ -45,7 +45,7 @@ self.init= function () {
         });
         
         $scope.createUser = function() {
-            auth.createUser($scope.login.name, $scope.login.password);
+            auth.createUser($scope.loginForm.userName, $scope.loginForm.password);
         };
 
         $scope.logout = function () {
@@ -53,7 +53,7 @@ self.init= function () {
         };
 
         $scope.login = function () {
-            auth.login($scope.login.name, $scope.login.password);
+            auth.login($scope.loginForm.userName, $scope.loginForm.password);
         };
     });
 
