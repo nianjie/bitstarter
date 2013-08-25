@@ -173,7 +173,7 @@
 	    </span>
 	    <span ng-show="user" class="pull-right">
 	      Hi {{user.name}}, welcome to this site. 
-	      <button class="btn btn-link btn-mini" ng-click="logout()">Logout</button>
+	      <button class="btn btn-link" ng-click="logout()">Logout</button>
 	    </span>
 	  </div>
 	</div>
@@ -190,7 +190,7 @@
 		Sign up
 	      </button>
 	      or
-	      <button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
+	      <button type="button" class="btn btn-primary btn-mini" ng-click="loginFn(login.userName, login.password)">
 		Sign in
 	      </button>
 	    </form>

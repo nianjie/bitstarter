@@ -30,16 +30,30 @@ self.init= function () {
     myapp.controller('LoginController', function ($scope, auth) {
 	var propName = auth.init();
 
+	function usernameToEmail (username) {
+	    return '{0}@firebase.com'.replace(/\{0\}/, username);
+	};
+
+	function emailToUserName (email) {
+	    return email.split('@')[0];
+	};
+
+	function clear(prop) {
+	    prop = {};
+	};
+
         $scope.$watch(propName, function(newState, oldState ) {
             if (newState === oldState) { // no change
                 return; 
             }
             if (!oldState && newState) { // login
-                $scope.user = {name: newState.email, id: newState.id, session: newState.sessionKey};
+                $scope.user = {name: emailToUserName(newState.email), id: newState.id, session: newState.sessionKey};
+		delete $scope.login
                 return;
             }
             if (!newState && oldState) { // logout
                 delete $scope.user;
+		delete $scope.login;
                 return;
             }
         });
@@ -52,7 +66,7 @@ self.init= function () {
             auth.logout();
         };
 
-        $scope.login = function (uname, upwd) {
+        $scope.loginFn = function (uname, upwd) {
             auth.login(uname, upwd);
         };
     });
@@ -60,6 +74,7 @@ self.init= function () {
     
     
 };
+
 
 
 
