@@ -38,7 +38,7 @@ self.init= function () {
 	    return email.split('@')[0];
 	};
 
-	function clear(prop) {
+	function clear(prop) { // it does not work the way which was supposed to make the object referred by the argument empty , as the reference is passed by value so the assignment to is assigning a reference of object to another value of reference. Btw, there is no type of reference similar to C++ in JavaScript. So an assignment directly made to an arugment does not take effect on the one passed in.
 	    prop = {};
 	};
 
