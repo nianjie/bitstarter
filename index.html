@@ -163,40 +163,45 @@
 
       <!-- singup/signin form comes here -->
       <div class="container" ng-controller="LoginController">
+
 	<div class="row-fluid">
-	  <div class="pull-right">
-	    <span ng-hide="user">
+	  <div class="span12">
+	    <span ng-hide="user" class="pull-right">
 	      <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#signup">
 		Sign up | Sign in
 	      </button>
 	    </span>
-	    <span ng-show="user">
+	    <span ng-show="user" class="pull-right">
 	      Hi {{user.name}}, welcome to this site.  |<button class="btn btn-link" ng-click="logout()">Logout</button>
 	    </span>
 	  </div>
-	  <div class="collapse container signup" id="signup" ng-hide="user">
-	  <form class="form-inline" name="signup">
-      	    <div class="row-fluid">
-	      <div class="span6 offset1 sec1">
-		User Name:<input type="text" class="input-medium" name="user_name" ng-model="login.userName" placeholder="User Name/Email Address">
-		Password: <input type="password" class="input-small" name="user_password" ng-model="login.password" placeholder="Password">
+	</div>
+
+	<div class="row-fluid collapse in" id="signup" ng-hide="user">
+	  <div class="span10">
+	    <form class="form-inline" name="signup">
+      	      <div class="row-fluid">
+		<div class="span7 ">
+		  User Name:<input type="text" class="input-medium" name="user_name" ng-model="login.userName" placeholder="User Name/Email Address">
+		  Password: <input type="password" class="input-small" name="user_password" ng-model="login.password" placeholder="Password">
+		</div>
+		<div class="span5">
+		  <label class="checkbox">
+		    <input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
+		  </label>
+		  <button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
+		    Sign up
+		  </button>
+		  or
+		  <button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
+		    Sign in
+		  </button>
+		</div>
 	      </div>
-	      <div class="span5 sec2">
-		<label class="checkbox">
-		  <input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
-		</label>
-		<button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
-		  Sign up
-		</button>
-		or
-		<button type="button" class="btn btn-primary btn-mini" ng-click="login(login.userName, login.password)">
-		  Sign in
-		</button>
-	      </div>
-	    </div>
-	  </form>
+	    </form>
 	  </div>
 	</div>
+
       </div>
 
     <!-- We use row-fluid inside containers to achieve a resizable layout. -->
