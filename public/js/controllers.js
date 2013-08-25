@@ -54,7 +54,7 @@ self.init= function () {
 
         $scope.login = function () {
             auth.login($scope.login.name, $scope.login.password);
-        }
+        };
     });
 
     
