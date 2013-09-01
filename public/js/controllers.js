@@ -47,8 +47,8 @@ self.init= function () {
                 return; 
             }
             if (!oldState && newState) { // login
-		if (newState.error) {
-		    $scope.error = error;
+		if (newState) {
+		    $scope.error = newState;
 		    return;
 		}
                 $scope.user = {name: emailToUserName(newState.email), id: newState.id, session: newState.sessionKey};
