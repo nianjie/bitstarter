@@ -171,6 +171,9 @@
 		Sign up | Sign in
 	      </button>
 	    </span>
+	    <span ng-show="error" class="pull-right">
+	      Oops! Something happend. ({{error.msg}})
+	    </span>
 	    <span ng-show="user" class="pull-right">
 	      Hi {{user.name}}, welcome to this site. 
 	      <button class="btn btn-link" ng-click="logout()">Logout</button>

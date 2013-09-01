@@ -52,16 +52,22 @@ self.init = function () {
 	    
 	    return {
 		init:  function(options) {
-		    // we should catch any angularFireAuth:error in initialization quickly as much as possible.
-		    this._scope = $rootScope;
-		    this._scope.$on("angularFireAuth:error", function(evt, err) {
-			// There was an error during authentication.
-			console.log("angularFireAuth:error");
-		    });
-
 		    // current we simplly don't take the arguments
 		    options = {name: 'auth_name'};
 		    this._options = options;
+
+		    // we should catch any angularFireAuth:error in initialization quickly as much as possible.
+		    this._scope = $rootScope;
+		    this._scope.$on("angularFireAuth:error", function(evt, err) {
+			var self = this;
+			// There was an error during authentication.
+			if (err) {
+			    self._scope[options.name] = {error: {code: "", msg: ""}};
+			    err.code && self._scope[options.name].error.code = err.code;
+			    err.message && self._scope[options.name].error.msg = err.message;
+			}
+			console.log("angularFireAuth:error");
+		    });
 
 		    angularFireAuth.initialize(rootURL.url, options);
 
