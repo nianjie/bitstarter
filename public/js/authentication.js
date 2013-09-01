@@ -63,8 +63,11 @@ self.init = function () {
 			// There was an error during authentication.
 			if (err) {
 			    self._scope[options.name] = {error: {code: "", msg: ""}};
-			    err.code && self._scope[options.name].error.code = err.code;
-			    err.message && self._scope[options.name].error.msg = err.message;
+			    self._scope[options.name]['error']['code'] = err.code;
+			    self._scope[options.name].error.msg = err.message;
+			    // the assignment below is not correct and causes error
+			    // ReferenceError: Invalid left-hand side in assignment
+			    // err && err.message && self._scope[options.name].error.msg = err.message;
 			}
 			console.log("angularFireAuth:error");
 		    });
