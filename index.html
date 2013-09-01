@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myapp">
   <head>
     <meta charset="utf-8">
     <title>Tetris World</title>
@@ -41,7 +41,22 @@
       }
 
       /* All form factors */
-
+      .signup {
+        padding: 0% 0%;
+      }
+      .signup form {
+        margin: 0 auto;
+      }
+      .signup div.sec1{
+        padding: 2% 0%;
+      }
+      /* relationship selectors */
+      /* https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors */
+      .signup div.sec2 {  /* were if the selector called as `.signup .sect2', it would not work. */
+        margin: 0 auto;
+        width:  400px;
+        padding:2% 0;
+      }
       /* Main body and headings */
       body{
         font-family: 'Open Sans', Helvetica, Arial, sans-serif;
@@ -120,7 +135,7 @@
       }
     </style>
   </head>
-  <body>
+  <body >
 
     <!-- Mobile-friendly navbar adapted from example. -->
     <!-- http://twitter.github.io/bootstrap/examples/starter-template.html -->
@@ -138,12 +153,51 @@
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
               <li><a href="#about">About</a></li>
+              <li><a href="/orders">Orders</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+
+      <!-- singup/signin form comes here -->
+      <div class="container" ng-controller="LoginController">
+
+	<div class="row-fluid">
+	  <div class="span12">
+	    <span ng-hide="user" class="pull-right">
+	      <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#signup">
+		Sign up | Sign in
+	      </button>
+	    </span>
+	    <span ng-show="user" class="pull-right">
+	      Hi {{user.name}}, welcome to this site. 
+	      <button class="btn btn-link" ng-click="logout()">Logout</button>
+	    </span>
+	  </div>
+	</div>
+
+	<div class="row-fluid collapse" id="signup" ng-hide="user">
+	  <div class="span10 offset1">
+	    <form class="form-inline" name="signup">
+	      User Name:<input type="text" class="input-medium" name="user_name" ng-model="login.userName" placeholder="User Name/Email Address">
+	      Password: <input type="password" class="input-small" name="user_password" ng-model="login.password" placeholder="Password">
+	      <label class="checkbox">
+		<input type="checkbox" name="remember_me" ng-model="signup.rememberMe"> Remember me 
+	      </label>
+	      <button type="button" class="btn btn-warning btn-mini" ng-click="createUser(login.userName, login.password)">
+		Sign up
+	      </button>
+	      or
+	      <button type="button" class="btn btn-primary btn-mini" ng-click="loginFn(login.userName, login.password)">
+		Sign in
+	      </button>
+	    </form>
+	  </div>
+	</div>
+
+      </div>
 
     <!-- We use row-fluid inside containers to achieve a resizable layout. -->
     <!-- blogs.endjin.com/2013/04/tips-for-implementing-responsive-designs-using-bootstrap/ -->
@@ -317,12 +371,15 @@
             put at the bottom of the page.</p>
         </div>
       </div>
+
     </div>
-    
-    <!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
-    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+
     <!-- AngularJS: Declarative MVC framework; http://angularjs.org/ -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
+    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
+    <script type="text/javascript" src="js/angularFire.js"></script>
     <!-- coinbase: bitcoin payment -->
     <script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
     

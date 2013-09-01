@@ -1,79 +1,153 @@
-#!/usr/bin/env node
-var fs = require('fs');
-var express = require('express');
-var program = require('commander');
-var HTMLFILE_DEFAULT = "index.html";
-var CACHE_DEFAULT = true;
+// Define routes for simple SSJS web app. 
+// Writes Coinbase orders to database.
+var async   = require('async')
+  , express = require('express')
+  , fs      = require('fs')
+  , http    = require('http')
+  , https   = require('https')
+  , db      = require('./models');
 
-// use express 3.x
 var app = express();
 
-// log request
 app.use(express.logger());
 
-app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 8080);
 
-var cached = {};
-var enableCache = CACHE_DEFAULT;
-var indexFile = "index.html";
+app.use(express.static(__dirname + '/public')); 
+// use middleware to parse parameters sent by user.
+app.use('/signup', express.bodyParser()); 
 
-var assertFileExists = function(infile) {
-    var instr = infile.toString();
-    if(!fs.existsSync(instr)) {
-        console.log("%s does not exist. Exiting.", instr);
-        process.exit(1);
-    }
-    return instr;
-};
-
-var clone = function(fn) {
-    // Workaround for commander.js issue.
-    // http://stackoverflow.com/a/6772648
-    return fn.bind({});
-};
-
-if(require.main == module) {
-    program
-        .option('-n, --nocache', 'Disable file cache (default is enable)')
-        .option('-f, --file <html_file>', 'Path to html file (default is index.html)', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .parse(process.argv);
-    if (program.nocache) enableCache = false;
-    if (program.file) indexFile = program.file;
-} // what should do when running as an module?
-
-// a function that reads file specified.
-var readFile = function(fileName, encoding) {
-    var contents = null;
-    if (enableCache) { // cache file
-	if (!cached[fileName]) {
-	    console.log("read file : " + fs.realpathSync(fileName));
-	    // either a buffer or a string
-	    var out = fs.readFileSync(fileName, encoding);
-	    Buffer.isBuffer(out) ? cached[fileName] = out.toString() : cached[fileName] = out;
-	}
-	contents = cached[fileName];
-    } else { // not cache
-	console.log("read file : " + fs.realpathSync(fileName));
-	// either a buffer(if no encoding specified) or a string(if encoding specified)
-	var out = fs.readFileSync(fileName, encoding);
-	Buffer.isBuffer(out) ? contents = out.toString() : contents = out;
-    }
-
-    return contents;
-};
-
-
-// var myBuffer = new Buffer(256);
-
+// Render homepage (note trailing slash): example.com/
 app.get('/', function(request, response) {
-    var fileContent = readFile(indexFile);
-
-    response.send(fileContent);
-
-})
-;
-
-var port = process.env.PORT || 8080;
-app.listen(port, function() {
-  console.log("Listening on " + port);
+  var data = fs.readFileSync('index.html').toString();
+  response.send(data);
 });
+
+app.post('/signup', function(request, response) {
+    var uname = request.body.user_name;
+    var passwd = request.body.password;
+    console.log("user_name:" + uname + ", password:" + passwd);
+    Users.find({where: {user_name: uname}}).success(function(users_instance) {
+	if(users_instance) {
+	    // users already exists,comparing with password.
+	    if(users_instance.password == passwd) {
+		console.log("password is confirmed!");
+	    }else {
+		console.log("password doesn't match!");
+	    }
+	}else {
+	    // build instance and save
+	    var new_user_instance = Users.build({
+		user_name: uname,
+		password: passwd
+	    });
+	    new_user_instance.save().success(function() {
+		console.log("a new user has successfully signed up.");
+	    }).error(function(err) {
+		console.log("error when going to save:" + err);
+	    });
+	}
+    });
+    var data = fs.readFileSync('ok.html').toString();
+    response.send(data);
+});
+
+// Render example.com/orders
+app.get('/orders', function(request, response) {
+  global.db.Order.findAll().success(function(orders) {
+    var orders_json = [];
+    orders.forEach(function(order) {
+      orders_json.push({id: order.coinbase_id, amount: order.amount, time: order.time});
+    });
+    // Uses views/orders.ejs
+    response.render("orders", {orders: orders_json});
+  }).error(function(err) {
+    console.log(err);
+    response.send("error retrieving orders");
+  });
+});
+
+// Hit this URL while on example.com/orders to refresh
+app.get('/refresh_orders', function(request, response) {
+  https.get("https://coinbase.com/api/v1/orders?api_key=" + process.env.COINBASE_API_KEY, function(res) {
+    var body = '';
+    res.on('data', function(chunk) {body += chunk;});
+    res.on('end', function() {
+      try {
+        var orders_json = JSON.parse(body);
+        if (orders_json.error) {
+          response.send(orders_json.error);
+          return;
+        }
+        // add each order asynchronously
+        async.forEach(orders_json.orders, addOrder, function(err) {
+          if (err) {
+            console.log(err);
+            response.send("error adding orders");
+          } else {
+            // orders added successfully
+            response.redirect("/orders");
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        response.send("error parsing json");
+      }
+    });
+
+    res.on('error', function(e) {
+      console.log(e);
+      response.send("error syncing orders");
+    });
+  });
+
+});
+
+// try to find what DDL sequelize creates.
+var Users = db.sequelize.define("user", {
+    user_name: {type: db.Sequelize.STRING, unique: true, allowNull: false},
+    password: {type: db.Sequelize.STRING, allowNull: false}
+});
+
+// sync the database and start the server
+db.sequelize.sync().complete(function(err) {
+  if (err) {
+    throw err;
+  } else {
+    http.createServer(app).listen(app.get('port'), function() {
+      console.log("Listening on " + app.get('port'));
+    });
+  }
+});
+
+// add order to the database if it doesn't already exist
+var addOrder = function(order_obj, callback) {
+  var order = order_obj.order; // order json from coinbase
+  if (order.status != "completed") {
+    // only add completed orders
+    callback();
+  } else {
+    var Order = global.db.Order;
+    // find if order has already been added to our database
+    Order.find({where: {coinbase_id: order.id}}).success(function(order_instance) {
+      if (order_instance) {
+        // order already exists, do nothing
+        callback();
+      } else {
+        // build instance and save
+          var new_order_instance = Order.build({
+          coinbase_id: order.id,
+          amount: order.total_btc.cents / 100000000, // convert satoshis to BTC
+          time: order.created_at
+        });
+          new_order_instance.save().success(function() {
+          callback();
+        }).error(function(err) {
+          callback(err);
+        });
+      }
+    });
+  }
+};

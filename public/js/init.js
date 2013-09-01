@@ -18,8 +18,13 @@ ga('create', 'UA-42937068-1', 'herokuapp.com');
 ga('send', 'pageview');
 
 /* init application code */
-tetris.init();
-controllers.init();
+angular.module('TetrisWorld', ['firebase']);
+angular.module('TetrisWorld')
+    .value('rootURL', {
+	url: "https://tetrisworld.firebaseio.com/"
+    });
 authentication.init();
-datastore.init();
+//tetris.init();
+controllers.init();
+//datastore.init();
 
